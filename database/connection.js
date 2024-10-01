@@ -4,7 +4,7 @@ dotenv.config();
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(
-  "databasetodo",
+  "defaultdb",
   process.env.DB_USER,
   process.env.DB_PASS,
   {
