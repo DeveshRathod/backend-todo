@@ -12,6 +12,9 @@ app.use(cors());
 app.use(express.json());
 const __dirname = path.resolve();
 
+app.use("/health", (req, res) => {
+  res.status(200).send("Server is healthy");
+});
 // Connect to MongoDB
 connectDB();
 
