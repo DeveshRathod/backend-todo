@@ -120,3 +120,7 @@ export const checkMe = async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
+
+export const location = async (req, res) => {
+  res.status(200).send(process.env.LOCATION);
+};
