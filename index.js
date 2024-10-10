@@ -8,27 +8,33 @@ import todoRouter from "./routes/todo.route.js";
 
 const app = express();
 dotenv.config();
-app.use(cors());
+
+// Enable CORS for all origins
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "authorization"],
+  })
+);
+
 app.use(express.json());
 const __dirname = path.resolve();
 
+// Health route
 app.use("/health", (req, res) => {
   res.status(200).send("Server is healthy");
 });
-// Connect to MongoDB
+
+// Connect
 connectDB();
 
+// Routes
+app.use("/api/users", userRoutes);
+app.use("/api/todos", todoRouter);
+
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-//routes
-app.use("/api/users", userRoutes);
-app.use("/api/todos", todoRouter);
-
-// app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-// });
