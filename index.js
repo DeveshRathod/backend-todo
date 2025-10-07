@@ -5,9 +5,19 @@ import path from "path";
 import { connectDB } from "./database/connection.js";
 import userRoutes from "./routes/user.route.js";
 import todoRouter from "./routes/todo.route.js";
+import client from "prom-client";
 
 const app = express();
 dotenv.config();
+
+// for metrics
+const Register = new client.Registry();
+client.collectDefaultMetrics({ register });
+
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", register.contentType);
+  res.end(await register.metrics());
+});
 
 // Enable CORS for all origins
 app.use(
