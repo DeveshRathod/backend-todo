@@ -11,7 +11,7 @@ const app = express();
 dotenv.config();
 
 // for metrics
-const Register = new client.Registry();
+const register = new client.Registry();
 client.collectDefaultMetrics({ register });
 
 app.get("/metrics", async (req, res) => {
